@@ -1,0 +1,10 @@
+{
+    "name": "NoPetMSG",
+    "creator": "MisterCheezeCake",
+    "description": "Hides annoying autopet messages",
+    "version":"1.0.1",
+    "requires": ["SettingsManager"],
+    "helpMessage": "/noautopet to open settings",
+    "entry": "index.js"
+  }
+  
