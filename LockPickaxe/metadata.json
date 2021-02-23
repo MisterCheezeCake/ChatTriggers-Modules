@@ -1,0 +1,9 @@
+{
+	"name":"&5&lLockPickaxe",
+	"author": "MisterCheezeCake",
+	"description": "Stops pickaxe abilities from activating on your island. Created by &4&lMisterCheezeCake",
+	"helpMessage": "Welcome to LockPickaxe, you can configure the module with /lockpickaxe. Please report any bugs to MisterCheezeCake#1662 on Discord.",
+	"version": "1.1.0",
+	"requires": [ "SettingsManager" ],
+	"entry": "index.js"
+}
