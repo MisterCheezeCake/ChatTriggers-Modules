@@ -1,0 +1,8 @@
+{
+    "entry": "index.js",
+    "author": "MisterCheezeCake",
+    "version": "1.0.0",
+    "name": "Colors",
+    "description": "Ooh colors",
+    "helpMessage": "/colors to see all color codes. /copysymbol to copy the section symbol to your clipboard"
+}
