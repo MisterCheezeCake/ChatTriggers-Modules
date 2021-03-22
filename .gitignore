@@ -1,3 +1,4 @@
 *-settings.json
 .persistantData.json
 .DS_Store
+.keep.txt
