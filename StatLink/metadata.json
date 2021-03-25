@@ -1,0 +1,8 @@
+{
+    "entry": "index.js",
+    "author": "MisterCheezeCake",
+    "version": "1.0.0",
+    "name": "StatLink",
+    "description": "With a simple command, get a stat link for any player to numerous stats websites. ",
+    "helpMessage": "&f[&bStatLink&f] &aThanks for installing the module. Run &e/sl help &ato get started."
+}
