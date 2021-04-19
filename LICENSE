@@ -11,6 +11,7 @@ You are free to adapt the software for your own projects, provided you agree to 
   // While it may seem that the above provision violates the fundimental principle of open source and free software, this clause is simply an explicit clause to ensure complience with clause 2.
   2. You may not use or adapt the software in any way that could violate the Mojang EULA
   3. Any adaptations of the software, defined as anything which contains a portion of the software, must be open source and licensed under this exact license.
+    A. If any adaptations contain parts of other project, the adaptation must still be open source, however if the other project in your adaptation is licensed differently, and it is impossible to easily distinguish between the code of one project and another, you may license your adaptation under a copyleft license that is compatible with the license on the other project in your adaptation.
   4. You must credit the original creator in your adaptation.
   
 You may not use the software in anyway that violates the above terms without express written permission of MisterCheezeCake.
