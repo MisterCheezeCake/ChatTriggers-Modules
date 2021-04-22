@@ -1,9 +1,9 @@
 {
     "entry": "index.js",
     "author": "MisterCheezeCake",
-    "version": "1.0.1",
+    "version": "1.2.1",
     "name": "SkyBlockKeybinds",
     "description": "A simple, lightweight module that allows you to bind commands to various commands for Hypixel SkyBlock",
-    "requires": ["SettingsManager" , "FileUtilities"],
+    "requires": ["Vigilance" , "FileUtilities"],
     "helpMessage": "&aThank you for choosing SkyBlock keybinds! To bind keybinds just open the controls menu. If you would like keybinds added, you can message me in game at the IGN MisterCheezeCake or you can join my discord at inv.wtf/cheeze"
 }

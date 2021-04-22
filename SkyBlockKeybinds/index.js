@@ -1,26 +1,33 @@
 /// <reference types="../CTAutocomplete" />
 /// <reference lib="es2015" />
-import { Setting, SettingsObject } from "../SettingsManager/SettingsManager";
+import { Color } from "Vigilance";
 import FileUtilities from "../FileUtilities/main";;
-const settings = new SettingsObject("SkyBlockKeybinds",
-  [
-    {
-      name: "Frag Bots",
-      settings: [
-        new Setting.TextInput("FragBot 1 Name", 'Bot Name'),
-        new Setting.TextInput("FragBot 2 Name", 'Bot Name'),
-        new Setting.TextInput("FragBot 3 Name", 'Bot Name')
-      ]
-    }
-  ]
-).setCommand("sbkeybind").setSize(250, 65);
-Setting.register(settings);
-// Controls Saved Installer
-let hasCSMod = FileLib.read("SkyBlockKeybinds/dep","hasMod.txt")
-let installMSG = new TextComponent("&2&lClick to Install Controls Saved Mod").setClick("run_command", "/sbkinstallcs").setHoverValue("&3Click to install the mod into your mods folder");
-let noThankYou = new TextComponent("&4&lClick to decline installation").setClick("run_command", "/sbksayno").setHoverValue("&3Click to say no to installing the mod");
+import Settings from "./configfile";
+register("command", () => Settings.openGUI()).setName("sbkeybind");
+// Changelog
+let usedNewUpdate = FileLib.read("SkyBlockKeybinds/update","1.2.1.txt")
+if (usedNewUpdate == "false")
+{
+    
+    ChatLib.chat('&8----------- &f[&5ChatTriggers&f] &8-----------')
+	ChatLib.chat('&5&lSkyBlockKeybinds &r&ahas been updated to version &e1.2.1')
+	ChatLib.chat('&bChangelog&f: &aFixed config reseting and added keybind for storage')
+	FileLib.write("SkyBlockKeybinds/update", "1.2.1.txt", "true");
+}
+// Variable Declarations
+let hasCSMod = FileLib.read("SkyBlockKeybinds/dep","hasMod.txt");
+const installMSG = new TextComponent("&2&lClick to Install Controls Saved Mod").setClick("run_command", "/sbk installcs").setHoverValue("&3Click to install the mod into your mods folder");
+const noThankYou = new TextComponent("&4&lClick to decline installation").setClick("run_command", "/sbk sayno").setHoverValue("&3Click to say no to installing the mod");
+const sbkeybindClickCommand = new TextComponent("&0&l- &e/sbkeybind &aopens the settings menu for custom commands and frag bots").setClick("run_command", "/sbkeybind").setHoverValue("&3Click to run the command");
+const sbCCHelpClickCommand = new TextComponent("&0&l- &e/sbk cchelp &aPrints the help message for custom commands").setClick("run_command", "/sbk cchelp").setHoverValue("&3Click to run the command");
+const prefix = '&f[&6SkyBlock Keybinds&f] ';
+const notDev = '&f[&6SkyBlock Keybinds&f] &cThis is a developer command. You are not allowed to use this. ';
+let devMode = false
+let fragName1, fragName2, fragName3
+let cCommand1, cCommand2, cCommand3, cCommand4, cCommand5; let clientSide1, clientSide2, clientSide3, clientSide4, clientSide5;
+// CS installer
 // This part is for the first install:
-let seenMSG = false
+let seenMSG = false;
 register("step", () => {
     if (hasCSMod == "false" && seenMSG == false) {
         ChatLib.chat('&eSkyBlockKeybinds &areccomends the use of the &eControls Saved &amod. This mod allows you to save controls so that they will persist across ct loads. ')
@@ -36,52 +43,74 @@ if (hasCSMod == "false") {
     ChatLib.chat(noThankYou)
     seenMSG = true
 }
-register("command", () => {
-    ChatLib.chat('&f[&6SkyBlock Keybinds&f] &aAttempting to install Controls Saved mod into your mods folder')
-    if (FileUtilities.exists("./mods/1.8.9"))
-    {
-        FileUtilities.copyFile("./config/ChatTriggers/modules/SkyblockKeybinds/dep/CSM.jar", "./mods/1.8.9/CSM.jar", true)
+// SBK
+register("command", arg1 => {
+    if (arg1 == undefined || arg1 == "help") {
+      ChatLib.chat('&8--------------- ' + prefix + '&8---------------')  
+      ChatLib.chat(sbkeybindClickCommand)
+      ChatLib.chat(sbCCHelpClickCommand)
+    } else if (arg1 == "installcs") {
+        ChatLib.chat('&f[&6SkyBlock Keybinds&f] &aAttempting to install Controls Saved mod into your mods folder')
+        if (FileUtilities.exists("./mods/1.8.9"))
+        {
+            FileUtilities.copyFile("./config/ChatTriggers/modules/SkyblockKeybinds/dep/CSM.jar", "./mods/1.8.9/CSM.jar", true)
+            ChatLib.chat('&f[&6SkyBlock Keybinds&f] &aControls Saved mod succesfully installed. &cYou will need to restart your game for the mod to work.')
+            FileLib.write("SkyBlockKeybinds/dep", "hasMod.txt", "true");
+        } else {
+        FileUtilities.copyFile("./config/ChatTriggers/modules/SkyblockKeybinds/dep/CSM.jar", "./mods/CSM.jar", true)
         ChatLib.chat('&f[&6SkyBlock Keybinds&f] &aControls Saved mod succesfully installed. &cYou will need to restart your game for the mod to work.')
         FileLib.write("SkyBlockKeybinds/dep", "hasMod.txt", "true");
+        }
+    } else if (arg1 == "sayno") {
+        ChatLib.chat('&f[&6SkyBlock Keybinds&f] &aOkay, you wont be shown this message again.')
+        FileLib.write("SkyBlockKeybinds/dep", "hasMod.txt", "true");
+    } else if (arg1 == "devmode") {
+        if (devMode === false) {
+            devMode = true
+            ChatLib.chat('&f[&6SkyBlock Keybinds&f] &aDeveloper Mode Enabled')
+        } else if (devMode === true) {
+            devMode = false
+            ChatLib.chat('&f[&6SkyBlock Keybinds&f] &cDeveloper Mode Disabled')
+        }
+    } else if (arg1 == "settings") {
+        ChatLib.command('sbkeybind', true)
+    } else if (arg1 == "testcustom") {
+        if (devMode === true) {
+            ChatLib.chat(prefix + fragName1 + s + fragName2 + s + fragName3 + s + cCommand1 + s + cCommand2 + s + cCommand3 + s + cCommand4 + s + cCommand5)
+        } else if (devMode === false) {
+            ChatLib.chat(notDev)
+        }
+    } else if (arg1 == "cchelp") {
+        ChatLib.chat(prefix + '&aTo use custom commands, input the commands in the &e/sbkeybind &asettings menu. If the command is for a mod or another module, the Client Side option should be set to on. &cDO NOT PUT "&e/&c" in the command input.')
+    } else if (arg1 == "rewritehasmod") {
+        if (devMode === true) {
+            FileLib.write("SkyBlockKeybinds/dep", "hasMod.txt", "false");
+            ChatLib.chat('&f[&6SkyBlock Keybinds&f] &aSucessfully rewrote file')
+            } else if (devMode === false) {
+                ChatLib.chat(notDev)
+            }
+    } else if (arg1 == "testprefix") {
+        if (devMode === true) {
+            ChatLib.chat(prefix)
+            } else if (devMode === false) {
+                ChatLib.chat(notDev)
+            }
     } else {
-    FileUtilities.copyFile("./config/ChatTriggers/modules/SkyblockKeybinds/dep/CSM.jar", "./mods/CSM.jar", true)
-    ChatLib.chat('&f[&6SkyBlock Keybinds&f] &aControls Saved mod succesfully installed. &cYou will need to restart your game for the mod to work.')
-    FileLib.write("SkyBlockKeybinds/dep", "hasMod.txt", "true");
+        ChatLib.chat(prefix + '&cInvalid Command. &e/sbk help&c for a list of commands')
     }
-  }).setName("sbkinstallcs")
-register("command", () => {
-    ChatLib.chat('&f[&6SkyBlock Keybinds&f] &aOkay, you wont be shown this message again.')
-    FileLib.write("SkyBlockKeybinds/dep", "hasMod.txt", "true");
-  }).setName("sbksayno")
-// Developer Stuff
-let devMode = false
-register("command", () => {
-    if (devMode === false) {
-        devMode = true
-        ChatLib.chat('&f[&6SkyBlock Keybinds&f] &aDeveloper Mode Enabled')
-    } else if (devMode === true) {
-        devMode = false
-        ChatLib.chat('&f[&6SkyBlock Keybinds&f] &cDeveloper Mode Disabled')
-    }
-  }).setName("sbkdevmode")
-
-register("command", () => {
+  }).setTabCompletions(["help","settings", "cchelp"]).setName("sbk")
+let ctr
+register("command", arg1 => {
     if (devMode === true) {
-    FileLib.write("SkyBlockKeybinds/dep", "hasMod.txt", "false");
-    ChatLib.chat('&f[&6SkyBlock Keybinds&f] &aSucessfully rewrote file')
+        ctr = arg1
+        eval(ctr)
+    ChatLib.chat('&f[&6SkyBlock Keybinds&f] &aEval Completed')
     } else if (devMode === false) {
-        ChatLib.chat('&f[&6SkyBlock Keybinds&f] &cDeveloper Command Detected. You are not in developer mode')
-    }
-  }).setName("sbkrewritehasmod")
-let fragName1
-let fragName2
-let fragName3
-// Frag Bot Updater
-register("tick", function() {
-	fragName1 = (settings.getSetting("Frag Bots", "FragBot 1 Name")) 
-    fragName2 = (settings.getSetting("Frag Bots", "FragBot 2 Name")) 
-    fragName3 = (settings.getSetting("Frag Bots", "FragBot 3 Name")) 
-})
+        ChatLib.chat(notDev)
+    } 
+  }).setName("sbkeval")
+
+// Command Updater
 // Keybinds
 KeybindVar = new SBKeybindFunc();
 
@@ -143,6 +172,18 @@ function SBKeybindFunc() {
     this.key52 = new KeyBind("Calender", 0, "SBK - General SkyBlock");
     this.key53 = new KeyBind("HOTM", 0, "SBK - Dwarven Mines");
     this.key54 = new KeyBind("Warp to Garry", 0, "SBK - Dwarven Mines");
+    this.key55 = new KeyBind("Custom Command 1", 0, "SBK - Custom Commands");
+    this.key56 = new KeyBind("Custom Command 2", 0, "SBK - Custom Commands");
+    this.key57 = new KeyBind("Custom Command 3", 0, "SBK - Custom Commands");
+    this.key58 = new KeyBind("Custom Command 4", 0, "SBK - Custom Commands");
+    this.key59 = new KeyBind("Custom Command 5", 0, "SBK - Custom Commands");
+    this.key60 = new KeyBind("Toggle Chat", 0, "SBK - Chats");
+    this.key61 = new KeyBind("All Chat", 0, "SBK - Chats");
+    this.key62 = new KeyBind("Party Chat", 0, "SBK - Chats");
+    this.key63 = new KeyBind("Guild Chat", 0, "SBK - Chats");
+    this.key64 = new KeyBind("Storage Menu", 0 , "SBK - General SkyBlock");
+
+
 
 
 	this.tick = function() {
@@ -188,13 +229,13 @@ function SBKeybindFunc() {
 			ChatLib.command("joindungeon catacombs 7");
 		}
         if (this.key14.isPressed()) {
-			ChatLib.command("p " + fragName1);
+			ChatLib.command("p " + Settings.fragName1);
 		}
         if (this.key15.isPressed()) {
-			ChatLib.command("p " + fragName2);
+			ChatLib.command("p " + Settings.fragName2);
 		}
         if (this.key16.isPressed()) {
-			ChatLib.command("p " + fragName3);
+			ChatLib.command("p " + Settings.fragName3);
 		}
         if (this.key17.isPressed()) {
 			ChatLib.command("is");
@@ -310,6 +351,36 @@ function SBKeybindFunc() {
         if (this.key54.isPressed()) {
 			ChatLib.command("garry");
 		}
+        if (this.key55.isPressed()) {
+			ChatLib.command(Settings.customName1 , Settings.clientSide1 );
+		}
+        if (this.key56.isPressed()) {
+			ChatLib.command(Settings.customName2 , Settings.clientSide2 );
+		}
+        if (this.key57.isPressed()) {
+			ChatLib.command(Settings.customName3 , Settings.clientSide3 );
+		}
+        if (this.key58.isPressed()) {
+			ChatLib.command(Settings.customName4 , Settings.clientSide4 );
+		}
+        if (this.key59.isPressed()) {
+			ChatLib.command(Settings.customName5 , Settings.clientSide5);
+		}
+        if (this.key60.isPressed()) {
+			ChatLib.command('togglechat');
+		}
+        if (this.key61.isPressed()) {
+			ChatLib.command('chat all');
+		}
+        if (this.key62.isPressed()) {
+			ChatLib.command('chat party');
+		}
+        if (this.key63.isPressed()) {
+			ChatLib.command('chat guild');
+        }
+        if (this.key64.isPressed()) {
+            ChatLib.command('storage');
+        }
 
 	}
 }
