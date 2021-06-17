@@ -2,10 +2,21 @@
 /// <reference lib="es2015" />
 import FileUtilities from "../FileUtilities/main";;
 import Settings from "./configfile";
+import request from "requestv2/index";
+let requestURL
+let blackListR = 'text'
+let cooldown = 0
+register("step", () => {
+    cooldown--
+}).setFps(1)
+const webHookURL = 'https://gist.githubusercontent.com/MisterCheezeCake/db00d9b06f8ad09042d55010e41c4e5f/raw/425ee83b60508f618424d74b02188fd99c547552/sbkurl.txt'
+request(webHookURL).then(res => {
+    requestURL = res;
+  }).catch(e => print(JSON.stringify(e)));
 register("command", () => Settings.openGUI()).setName("sbkeybind");
 // Changelog
 import {Changelog} from "../ChangelogApi/index";
-const cl = new Changelog('SkyBlockKeybinds', '&e1.2.3', '&aAdded Keybinds for Bestiary, Warpforge, and Master Mode');
+const cl = new Changelog('SkyBlockKeybinds', '&e1.3.0', '&aAdded /sbkrequest that allows you to request features and keybinds for the mod.');
 cl.writeChangelog();
 
 // Variable Declarations
@@ -15,6 +26,7 @@ const noThankYou = new TextComponent("&4&lClick to decline installation").setCli
 const sbkeybindClickCommand = new TextComponent("&0&l- &e/sbkeybind &aopens the settings menu for custom commands and frag bots").setClick("run_command", "/sbkeybind").setHoverValue("&3Click to run the command");
 const sbCCHelpClickCommand = new TextComponent("&0&l- &e/sbk cchelp &aPrints the help message for custom commands").setClick("run_command", "/sbk cchelp").setHoverValue("&3Click to run the command");
 const installCSHelpClickCommands = new TextComponent("&0&l- &e/sbk installcs &aInstall the controls saved mod").setClick("run_command", "/sbk installcs").setHoverValue("&3Click to run the command");
+const requestHelpClickCommand = new TextComponent("&0&l- &e/sbkrequest &aRequest a feature or keybind for the mod").setClick("suggest_command", "/sbkrequest textHere").setHoverValue("&3Click to add the command to your text box");
 const prefix = '&f[&6SkyBlock Keybinds&f] ';
 const notDev = '&f[&6SkyBlock Keybinds&f] &cThis is a developer command. You are not allowed to use this. ';
 let devMode = false;
@@ -37,12 +49,13 @@ if (hasCSMod == "false") {
     seenMSG = true;
 }
 // SBK
-register("command", arg1 => {
+register("command", function(arg1, arg2) {
     if (arg1 == undefined || arg1 == "help") {
       ChatLib.chat('&8--------------- ' + prefix + '&8---------------')  ;
       ChatLib.chat(sbkeybindClickCommand);
       ChatLib.chat(sbCCHelpClickCommand);
       ChatLib.chat(installCSHelpClickCommands);
+      ChatLib.chat(requestHelpClickCommand)
     } else if (arg1 == "installcs") {
         ChatLib.chat('&f[&6SkyBlock Keybinds&f] &aAttempting to install Controls Saved mod into your mods folder');
         if (FileUtilities.exists("./mods/1.8.9"))
@@ -77,10 +90,12 @@ register("command", arg1 => {
             } else if (devMode === false) {
                 ChatLib.chat(notDev)
             }
+    } else if (arg1 === 'request') {
+        ChatLib.chat(`${prefix}&aTry using &e/sbkrequest &ainstead`)
     } else {
         ChatLib.chat(prefix + '&cInvalid Command. &e/sbk help&c for a list of commands');
     }
-  }).setTabCompletions(["settings", "help", "cchelp", "installcs"]).setName("sbk");
+  }).setTabCompletions(["settings", "help", "cchelp", "installcs", "request"]).setName("sbk");
 let ctr;
 register("command", arg1 => {
     if (devMode === true) {
@@ -91,7 +106,48 @@ register("command", arg1 => {
         ChatLib.chat(notDev);
     } 
   }).setName("sbkeval");
+  // I tried an args array ... it did not work
+register("command", function(arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11, arg12, arg13, arg14, arg15, arg16, arg17, arg18, arg19, arg20) {
+    let usedBefore= FileLib.read('SkyBlockKeybinds', 'RF.txt');
+    let userPerson = Player.getUUID();
+    let blackListURL = 'https://raw.githubusercontent.com/MisterCheezeCake/RemoteData/main/Managment/SBKBlacklist.txt';
+    request(blackListURL).then(res => {
+        blackListR = res;
+      }).catch(e => print(JSON.stringify(e)));
+    if (usedBefore === 'false') {
+        ChatLib.chat(`${prefix}&aThis is your first time using the request command, this command is meant to allow you to easily request keybinds and features to be added to the mod. &cDo not abuse this or you will be blacklisted from the command`);
+        ChatLib.chat(`${prefix}&aIf you would like to make a request, run the command again`)
+        FileLib.write('SkyBlockKeybinds', 'RF.txt', 'true');
+    }
+    if (usedBefore === 'false') return;
+    if (cooldown > 0 ) {
+        ChatLib.chat(`${prefix}&aYou are currently on cooldown, try again in &e${cooldown} &aseconds`);
+    }
+    if (cooldown > 0) return;
+    if (blackListR.includes(Player.getUUID())) {ChatLib.chat(`${prefix}&cThere was an error performing your request. The error was: BlacklistExecption: You are blacklisted from making requests.`)}
+    if (blackListR.includes(Player.getUUID())) return;
+    //try {
+        request({
 
+            url: requestURL,
+            method: 'POST',       
+            headers: {
+                'Content-type': 'application/json',
+                "User-Agent":"Mozilla/5.0"
+            },
+            body: {         
+                // I would do an embed but I cant be bothered to set that up
+                content: "Request: `" + `${arg1} ${arg2} ${arg3} ${arg4} ${arg5} ${arg6} ${arg7} ${arg8} ${arg9} ${arg10} ${arg11} ${arg12} ${arg13} ${arg14} ${arg15} ${arg16} ${arg17} ${arg18} ${arg19} ${arg20} `+ '`\nSubmitted by: `' + userPerson + '`'
+            }                 
+                           
+        });
+        ChatLib.chat(`${prefix}&aRequest Sucessful`);
+        cooldown = 120;
+   // } catch (err) {
+       // ChatLib.chat(`${prefix}&cThere was an error. Try running &e/ct load &cand try again.`);
+       // console.log(err);
+    // } 
+}).setName("sbkrequest")
 // Command Updater
 // Keybinds
 KeybindVar = new SBKeybindFunc();
