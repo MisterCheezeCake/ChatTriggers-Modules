@@ -16,7 +16,7 @@ request(webHookURL).then(res => {
 register("command", () => Settings.openGUI()).setName("sbkeybind");
 // Changelog
 import {Changelog} from "../ChangelogApi/index";
-const cl = new Changelog('SkyBlockKeybinds', '&e1.3.0', '&aAdded /sbkrequest that allows you to request features and keybinds for the mod.');
+const cl = new Changelog('SkyBlockKeybinds', '&e1.3.1', '&aAdded /sbkrequest that allows you to request features and keybinds for the mod.');
 cl.writeChangelog();
 
 // Variable Declarations
@@ -126,7 +126,7 @@ register("command", function(arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg
     if (cooldown > 0) return;
     if (blackListR.includes(Player.getUUID())) {ChatLib.chat(`${prefix}&cThere was an error performing your request. The error was: BlacklistExecption: You are blacklisted from making requests.`)}
     if (blackListR.includes(Player.getUUID())) return;
-    //try {
+    try {
         request({
 
             url: requestURL,
@@ -143,10 +143,10 @@ register("command", function(arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg
         });
         ChatLib.chat(`${prefix}&aRequest Sucessful`);
         cooldown = 120;
-   // } catch (err) {
-       // ChatLib.chat(`${prefix}&cThere was an error. Try running &e/ct load &cand try again.`);
-       // console.log(err);
-    // } 
+    } catch (err) {
+       ChatLib.chat(`${prefix}&cThere was an error. Try running &e/ct load &cand try again.`);
+        console.log(err);
+    } 
 }).setName("sbkrequest")
 // Command Updater
 // Keybinds
