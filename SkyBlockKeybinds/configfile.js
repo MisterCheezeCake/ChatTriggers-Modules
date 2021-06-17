@@ -3,6 +3,12 @@ import { @Vigilant, @TextProperty, @ColorProperty, @ButtonProperty, @SwitchPrope
 
 @Vigilant("SkyBlockKeybinds")
 class Settings {
+    @SwitchProperty({
+        name: "Add to chat history",
+        description: "Adds commands run by keybinds to your chat history when they are pressed",
+        category: "General"
+    })
+    chatHistory = false;
     @TextProperty({
         name: "Frag Bot 1",
         description: "Set Name for Frag Bot 1. Keybind bound in controls",

@@ -16,7 +16,7 @@ request(webHookURL).then(res => {
 register("command", () => Settings.openGUI()).setName("sbkeybind");
 // Changelog
 import {Changelog} from "../ChangelogApi/index";
-const cl = new Changelog('SkyBlockKeybinds', '&e1.3.2', '&aAdded /sbkrequest that allows you to request features and keybinds for the mod.');
+const cl = new Changelog('SkyBlockKeybinds', '&e1.4.0', `&aAdded keybinds for Stash, Guild, Events, and Jerry's Workshop. Also added an option to add command to chat history`);
 cl.writeChangelog();
 
 // Variable Declarations
@@ -113,6 +113,7 @@ register("command", function() {
     let blackListURL = 'https://raw.githubusercontent.com/MisterCheezeCake/RemoteData/main/Managment/SBKBlacklist.txt';
     request(blackListURL).then(res => {
         blackListR = res;
+
       }).catch(e => print(JSON.stringify(e)));
     if (usedBefore === 'false') {
         ChatLib.chat(`${prefix}&aThis is your first time using the request command, this command is meant to allow you to easily request keybinds and features to be added to the mod. &cDo not abuse this or you will be blacklisted from the command`);
@@ -149,6 +150,13 @@ register("command", function() {
     } 
 }).setName("sbkrequest")
 // Command Updater
+
+// Add to chat history
+function addC(msg) {
+    if (Settings.chatHistory === false) return;
+    let fmsg = `/${msg}`
+    Client.getMinecraft().field_71456_v.func_146158_b().func_146239_a(fmsg)
+}
 // Keybinds
 KeybindVar = new SBKeybindFunc();
 
@@ -232,6 +240,18 @@ function SBKeybindFunc() {
     this.key71 = new KeyBind("Join Master 5", 0 , "SBK - Dungeons");
     this.key72 = new KeyBind("Join Master 6", 0 , "SBK - Dungeons");
     this.key73 = new KeyBind("Join Master 7", 0 , "SBK - Dungeons");
+    // Added in 1.4.0
+    this.key74 = new KeyBind("Jerry Island", 0, "SBK - Warps");
+    this.key75 = new KeyBind("Play SkyBlock", 0, "SBK General SkyBlock");
+    this.key76 = new KeyBind("Profile Menu", 0, "SBK - General SkyBlock");
+    this.key77 = new KeyBind("View Stash", 0, "SBK - Stash");
+    this.key78 = new KeyBind("Pick Up Stash", 0, "SBK - Stash");
+    this.key79 = new KeyBind("Clear Stash", 0, "SBK - Stash");
+    this.key80 = new KeyBind("Guild Online", 0, "SBK - Guild");
+    this.key81 = new KeyBind("Guild List", 0, "SBK - Guild");
+    this.key82 = new KeyBind("Guild Top", 0, "SBK - Guild");
+    this.key83 = new KeyBind("Guild Party", 0, "SBK - Guild");
+    this.key84 = new KeyBind("Events", 0, "SBK - General SkyBlock")
 
 
 
@@ -240,226 +260,358 @@ function SBKeybindFunc() {
 	this.tick = function() {
 		if (this.key.isPressed()) {
 			ChatLib.command("ah");
+            addC('ah');
 		}
 		if (this.key2.isPressed()) {
 			ChatLib.command("bz");
+            addC('bz');
 		}
 		if (this.key3.isPressed()) {
 			ChatLib.command("p leave");
+            addC('p leave');
 		}
 		
 		if (this.key4.isPressed()) {
 			ChatLib.command("p list");
+            addC('p list');
 		}
 		if (this.key5.isPressed()) {
 			ChatLib.command("p warp");
+            addC('p warp');
 		}
 		if (this.key6.isPressed()) {
 			ChatLib.command("reparty", true);
+            addC('reparty');
 		}
         if (this.key7.isPressed()) {
 			ChatLib.command("joindungeon catacombs 1");
+            addC('joindungeon catacombs 1');
             
 		}
         if (this.key8.isPressed()) {
 			ChatLib.command("joindungeon catacombs 2");
+            addC('joindungeon catacombs 2');
 		}
         if (this.key9.isPressed()) {
 			ChatLib.command("joindungeon catacombs 3");
+            addC('joindungeon catacombs 3');
 		}
         if (this.key10.isPressed()) {
 			ChatLib.command("joindungeon catacombs 4");
+            addC('joindungeon catacombs 4');
 		}
         if (this.key11.isPressed()) {
 			ChatLib.command("joindungeon catacombs 5");
+            addC('joindungeon catacombs 5');
 		}
         if (this.key12.isPressed()) {
 			ChatLib.command("joindungeon catacombs 6");
+            addC('joindungeon catacombs 6');
 		}
         if (this.key13.isPressed()) {
 			ChatLib.command("joindungeon catacombs 7");
+            addC('joindungeon catacombs 7');
 		}
         if (this.key14.isPressed()) {
 			ChatLib.command("p " + Settings.fragName1);
+            addC(`p ${Settings.fragName1}`);
 		}
         if (this.key15.isPressed()) {
 			ChatLib.command("p " + Settings.fragName2);
+            addC(`p ${Settings.fragName2}`);
 		}
         if (this.key16.isPressed()) {
 			ChatLib.command("p " + Settings.fragName3);
+            addC(`p ${Settings.fragName3}`);
 		}
         if (this.key17.isPressed()) {
 			ChatLib.command("is");
+            addC('is');
 		}
         if (this.key18.isPressed()) {
 			ChatLib.command("warp hub");
+            addC('warp hub');
 		}
         if (this.key19.isPressed()) {
 			ChatLib.command("warp spider");
+            addC('warp spider');
 		}
         if (this.key20.isPressed()) {
 			ChatLib.command("warp nether");
+            addC('warp nether');
 		}
         if (this.key21.isPressed()) {
 			ChatLib.command("warp end");
+            addC('warp end');
 		}
         if (this.key22.isPressed()) {
 			ChatLib.command("warp park");
+            addC('warp park');
 		}
         if (this.key23.isPressed()) {
 			ChatLib.command("warp gold");
+            addC('warp gold');
 		}
         if (this.key24.isPressed()) {
 			ChatLib.command("warp deep");
+            addC('warp deep');
+            
 		}
         if (this.key25.isPressed()) {
 			ChatLib.command("warp mines");
+            addC('warp mines');
 		}
         if (this.key26.isPressed()) {
 			ChatLib.command("warp barn");
+            addC('warp barn');
 		}
         if (this.key27.isPressed()) {
 			ChatLib.command("warp desert");
+            addC('warp desert');
 		}
         if (this.key28.isPressed()) {
 			ChatLib.command("warp dungeon_hub");
+            addC('warp dungeon_hub');
 		}
         if (this.key29.isPressed()) {
 			ChatLib.command("warp crypt");
+            addC('warp crypt');
 		}
         if (this.key30.isPressed()) {
 			ChatLib.command("warp nest");
+            addC('warp nest');
 		}
         if (this.key31.isPressed()) {
 			ChatLib.command("warp castle");
+            addC('warp castle');
 		}
         if (this.key32.isPressed()) {
 			ChatLib.command("warp magma");
+            addC('warp magma');
 		}
         if (this.key33.isPressed()) {
 			ChatLib.command("warp da");
+            addC('warp da');
 		}
         if (this.key34.isPressed()) {
 			ChatLib.command("warp drag");
+            addC('warp drag');
 		}
         if (this.key35.isPressed()) {
 			ChatLib.command("warp jungle");
+            addC('warp jungle');
 		}
         if (this.key36.isPressed()) {
 			ChatLib.command("warp howl");
+            addC('warp howl');
 		}
         if (this.key37.isPressed()) {
 			ChatLib.command("av");
+            addC('av');
 		}
         if (this.key38.isPressed()) {
 			ChatLib.command("et");
+            addC('et');
 		}
         if (this.key39.isPressed()) {
 			ChatLib.command("craft");
+            addC('craft');
 		}
         if (this.key40.isPressed()) {
 			ChatLib.command("ec");
+            addC('ec');
 		}
         if (this.key41.isPressed()) {
 			ChatLib.command("pets");
+            addC('pets');
 		}
         if (this.key42.isPressed()) {
 			ChatLib.command("wardrobe");
+            addC('wardrobe');
 		}
         if (this.key43.isPressed()) {
 			ChatLib.command("scg");
+            addC('scg');
 		}
         if (this.key44.isPressed()) {
 			ChatLib.command("viewsettings");
+            addC('viewsettings');
 		}
         if (this.key45.isPressed()) {
 			ChatLib.command("sbmenu");
+            addC('sbmenu');
 		}
         if (this.key46.isPressed()) {
 			ChatLib.command("skillmenu");
+            addC('skillmenu');
 		}
         if (this.key47.isPressed()) {
 			ChatLib.command("collection");
+            addC('collection');
 		}
         if (this.key48.isPressed()) {
 			ChatLib.command("craftedgenerators");
+            addC('craftedgenerators');
 		}
         if (this.key49.isPressed()) {
 			ChatLib.command("recipemenu");
+            addC('recipemenu');
 		}
         if (this.key50.isPressed()) {
 			ChatLib.command("questlog");
+            addC('questlog');
 		}
         if (this.key51.isPressed()) {
 			ChatLib.command("warp");
+            addC('warp');
 		}
         if (this.key52.isPressed()) {
 			ChatLib.command("calendar");
+            addC('calendar');
 		}
         if (this.key53.isPressed()) {
 			ChatLib.command("hotm");
+            addC('hotm');
 		}
         if (this.key54.isPressed()) {
 			ChatLib.command("garry");
+            addC('garry');
 		}
         if (this.key55.isPressed()) {
 			ChatLib.command(Settings.customName1 , Settings.clientSide1 );
+            addC(Settings.customName1);
 		}
         if (this.key56.isPressed()) {
 			ChatLib.command(Settings.customName2 , Settings.clientSide2 );
+            addC(Settings.customName2);
 		}
         if (this.key57.isPressed()) {
 			ChatLib.command(Settings.customName3 , Settings.clientSide3 );
+            addC(Settings.customName3);
 		}
         if (this.key58.isPressed()) {
 			ChatLib.command(Settings.customName4 , Settings.clientSide4 );
+            addC(Settings.customName4);
 		}
         if (this.key59.isPressed()) {
 			ChatLib.command(Settings.customName5 , Settings.clientSide5);
+            addC(Settings.customName5);
 		}
         if (this.key60.isPressed()) {
 			ChatLib.command('togglechat');
+            addC('togglechat');
 		}
         if (this.key61.isPressed()) {
 			ChatLib.command('chat all');
+            addC('chat all');
 		}
         if (this.key62.isPressed()) {
 			ChatLib.command('chat party');
+            addC('chat party');
 		}
         if (this.key63.isPressed()) {
 			ChatLib.command('chat guild');
+            addC('chat guild');
         }
         if (this.key64.isPressed()) {
             ChatLib.command('storage');
+            addC('storage');
         }
         if (this.key65.isPressed()) {
             ChatLib.command('bestiary');
+            addC('bestiary');
         }
         if (this.key66.isPressed()) {
             ChatLib.command('warpforge');
+            addC('warpforge');
         }
         if (this.key67.isPressed()) {
             ChatLib.command('joindungeon master_catacombs 1');
+            addC('joindungeon master_catacombs 1');
         }
         if (this.key68.isPressed()) {
             ChatLib.command('joindungeon master_catacombs 2');
+            addC('joindungeon master_catacombs 2');
         }
         if (this.key69.isPressed()) {
             ChatLib.command('joindungeon master_catacombs 3');
+            addC('joindungeon master_catacombs 3');
         }
         if (this.key70.isPressed()) {
             ChatLib.command('joindungeon master_catacombs 4');
+            addC('joindungeon master_catacombs 4');
         }
         if (this.key71.isPressed()) {
             ChatLib.command('joindungeon master_catacombs 5');
+            addC('joindungeon master_catacombs 5');
         }
         if (this.key72.isPressed()) {
             ChatLib.command('joindungeon master_catacombs 6');
+            addC('joindungeon master_catacombs 6');
         }
         if (this.key73.isPressed()) {
             ChatLib.command('joindungeon master_catacombs 7');
+            addC('joindungeon master_catacombs 7');
             // As of release, this does nothing as master floor 7 is not released.
+        }
+        if (this.key74.isPressed()) {
+            ChatLib.command('savethejerrys');
+            addC('savethejerrys')
+        }
+        if (this.key75.isPressed()) {
+            ChatLib.command('play sb');
+            addC('play sb')
+        }
+        if (this.key76.isPressed()) {
+            ChatLib.command('profiles');
+            addC('profiles')
+        }
+        if (this.key77.isPressed()) {
+            ChatLib.command('viewstash');
+            addC('viewstash')
+        }
+        if (this.key78.isPressed()) {
+            ChatLib.command('pickupstash');
+            addC('pickupstash')
+        }
+        if (this.key79.isPressed()) {
+            ChatLib.command('clearstash');
+            addC('clearstash')
+        }
+        if (this.key80.isPressed()) {
+            ChatLib.command('g online');
+            addC('g online')
+        }
+        if (this.key81.isPressed()) {
+            ChatLib.command('g list');
+            addC('g list')
+        }
+        if (this.key82.isPressed()) {
+            ChatLib.command('g top');
+            addC('g top')
+        }
+        if (this.key83.isPressed()) {
+            ChatLib.command('g party');
+            addC('g party')
+        }
+        if (this.key84.isPressed()) {
+            ChatLib.command('events');
+            addC('events')
         }
 
 	}
-}
+}   
+/* Release Notes
+
+    1.0.0 - Init
+    1.0.1 - Fixed CS Installer Prompt on initial install
+    1.1.0 - Custom Commands and Keybinds (see Keybind Comments)
+    1.2.0 - Switched to Vigilance | Internal Note: Added bug with config reseting
+    1.2.1 - Fixed Config Bug and added Keybind for Storage
+    1.2.2 - Keybinds (see Keybind Comments)
+    1.3.0 - Added /sbk request command
+    1.3.1 - Readded the request try-catch
+    1.3.2 - Optimized thanks to Kerby
+    1.4.0 - Add to Chat History and Keybinds (see Keybind Comments)
+
+*/
