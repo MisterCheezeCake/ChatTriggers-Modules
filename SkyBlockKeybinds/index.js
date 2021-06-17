@@ -16,7 +16,7 @@ request(webHookURL).then(res => {
 register("command", () => Settings.openGUI()).setName("sbkeybind");
 // Changelog
 import {Changelog} from "../ChangelogApi/index";
-const cl = new Changelog('SkyBlockKeybinds', '&e1.3.1', '&aAdded /sbkrequest that allows you to request features and keybinds for the mod.');
+const cl = new Changelog('SkyBlockKeybinds', '&e1.3.2', '&aAdded /sbkrequest that allows you to request features and keybinds for the mod.');
 cl.writeChangelog();
 
 // Variable Declarations
@@ -107,7 +107,7 @@ register("command", arg1 => {
     } 
   }).setName("sbkeval");
   // I tried an args array ... it did not work
-register("command", function(arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11, arg12, arg13, arg14, arg15, arg16, arg17, arg18, arg19, arg20) {
+register("command", function() {
     let usedBefore= FileLib.read('SkyBlockKeybinds', 'RF.txt');
     let userPerson = Player.getUUID();
     let blackListURL = 'https://raw.githubusercontent.com/MisterCheezeCake/RemoteData/main/Managment/SBKBlacklist.txt';
@@ -124,8 +124,8 @@ register("command", function(arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg
         ChatLib.chat(`${prefix}&aYou are currently on cooldown, try again in &e${cooldown} &aseconds`);
     }
     if (cooldown > 0) return;
-    if (blackListR.includes(Player.getUUID())) {ChatLib.chat(`${prefix}&cThere was an error performing your request. The error was: BlacklistExecption: You are blacklisted from making requests.`)}
-    if (blackListR.includes(Player.getUUID())) return;
+    if (blackListR.includes(Player.getUUID())) {ChatLib.chat(`${prefix}&cThere was an error performing your request. The error was: BlacklistExecption: You are blacklisted from making requests.`); return;}
+    let thingToSend = [].slice.call(arguments).join(" ") // I make best variable names
     try {
         request({
 
@@ -137,7 +137,7 @@ register("command", function(arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg
             },
             body: {         
                 // I would do an embed but I cant be bothered to set that up
-                content: "Request: `" + `${arg1} ${arg2} ${arg3} ${arg4} ${arg5} ${arg6} ${arg7} ${arg8} ${arg9} ${arg10} ${arg11} ${arg12} ${arg13} ${arg14} ${arg15} ${arg16} ${arg17} ${arg18} ${arg19} ${arg20} `+ '`\nSubmitted by: `' + userPerson + '`'
+                content: "Request: `" + thingToSend + '`\nSubmitted by: `' + userPerson + '`'
             }                 
                            
         });
