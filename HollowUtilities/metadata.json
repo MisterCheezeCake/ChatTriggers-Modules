@@ -1,0 +1,9 @@
+{
+    "$schema": "../CTAutoComplete/schema.json",
+    "creator": "MisterCheezeCake",
+    "name": "HollowUtilities",
+    "requires": ["Vigilance", "ChangelogAPI"],
+    "entry": "index.js",
+    "version": "0.1.0",
+    "description": "Utilities for the crystal hollows"
+}

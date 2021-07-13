@@ -1,0 +1,11 @@
+
+[general]
+	auto_enter_hollows = true
+
+[spam_hiders]
+	hide_wind_change_messages = true
+	hide_pristine_messages = true
+
+[module_settings]
+	auto_enter_hollows = true
+
