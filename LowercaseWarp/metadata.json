@@ -1,0 +1,9 @@
+{
+    "$schema": "../CTAutoComplete/schema.json",
+    "name": "LowercaseWarp",
+    "creator": "MisterCheezeCake",
+    "entry": "index.js",
+    "version": "1.0.0",
+    "description": "Make warp commands lowercase",
+    "helpMessage": "/lcw on/off to toggle"
+}
