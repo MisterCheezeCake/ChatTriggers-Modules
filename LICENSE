@@ -4,16 +4,14 @@ Copyright (C) 2021 MisterCheezeCake
 
 
 The software will be defined as all of the code, files, and documentation of the program licensed under this license.
-
-You are free to adapt the software for your own projects, provided you agree to follow the following conditions:
+An adaption of the software will be defined as any program that contains a portion of the software.
+Any person who obtains a copy of the software is free to use it for any purpose without conditions, excluding modifying and adapting the software.
+Any person wishing to modify or adapt the software, may do so provided they to the following conditions:
 
   1. You must not make any commercial usage of the software or of any adaptations of the software.
-  // While it may seem that the above provision violates the fundimental principle of open source and free software, this clause is simply an explicit clause to ensure complience with clause 2.
-  2. You may not use or adapt the software in any way that could violate the Mojang EULA
-  3. Any adaptations of the software, defined as anything which contains a portion of the software, must be open source and licensed under this exact license.
-    A. If any adaptations contain parts of other project, the adaptation must still be open source, however if the other project in your adaptation is licensed differently, and it is impossible to easily distinguish between the code of one project and another, you may license your adaptation under a copyleft license that is compatible with the license on the other project in your adaptation.
-  4. You must credit the original creator in your adaptation.
-  
-You may not use the software in anyway that violates the above terms without express written permission of MisterCheezeCake.
+  2. You must not adapt the software in any way that could violate the End User License Agreement or Commercial Usage Guidelines of Mojang AB.
+  3. Any adaptations of the software must have their source code made available, non-obfuscated, to anyone wishing to view said source code. In addition, all adaptions of the software must carry this license.
+  4. Credit must be provided to the original creator of the software in any adaptations.  
+You must not adapt the software in anyway that violates the above terms without express written permission of MisterCheezeCake.
 
-No warranties, express or implied, are provided for the software. MisterCheezeCake is not responsible or liable for any misfortunes arising from the use or adaptation of the software.
+The software is provided “as is”, without warranty of any kind, express or implied, including but not limited to the warranties of merchantability, fitness for a particular purpose and noninfringement. In no event shall the authors or copyright holders be liable for any claim, damages or other liability, whether in an action of contract, tort or otherwise, arising from, out of or in connection with the software or the use or other dealings in the software.
