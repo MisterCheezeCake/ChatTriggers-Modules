@@ -1,0 +1,8 @@
+{
+    "$schema": "../CTAutoComplete/schema.json",
+    "name": "CheezeCore",
+    "description": "A central library for my modules",
+    "creator": "MisterCheezeCake",
+    "entry": "index.js",
+    "version": "0.0.1"
+}
