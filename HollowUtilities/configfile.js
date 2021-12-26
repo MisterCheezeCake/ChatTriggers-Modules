@@ -2,13 +2,14 @@ import { @Vigilant, @SwitchProperty} from 'Vigilance';
 
 @Vigilant("HollowUtilities")
 class Settings {
-
+/*
     @SwitchProperty({
         name: "Auto Enter Hollows",
         description: "Automaticly warp to the crystal hollows when you get the option.",
         category: "General",
     })
     toggleAuto = true
+    */
     @SwitchProperty({
         name: "Hide Pristine Messages",
         description: "Hide Pristine Enchant Messages",
