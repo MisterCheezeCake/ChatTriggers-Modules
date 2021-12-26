@@ -1,7 +1,7 @@
 {
     "entry": "index.js",
     "author": "MisterCheezeCake",
-    "version": "1.1.0",
+    "version": "1.2.0",
     "name": "StatLink",
     "description": "With a simple command, get a stat link for any player to numerous stats websites. ",
     "requires": ["ChangelogAPI"],
