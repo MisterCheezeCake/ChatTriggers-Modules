@@ -3,7 +3,8 @@
     "name": "LowercaseWarp",
     "creator": "MisterCheezeCake",
     "entry": "index.js",
-    "version": "1.0.0",
+    "version": "1.0.1",
     "description": "Make warp commands lowercase",
-    "helpMessage": "/lcw on/off to toggle"
+    "helpMessage": "/lcw on/off to toggle",
+    "changelog": "Fixed a bug with toggling"
 }

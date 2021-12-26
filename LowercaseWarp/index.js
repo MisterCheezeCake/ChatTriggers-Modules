@@ -11,11 +11,11 @@ register("command", arg1 => {
 
 register("command", arg1 => {
     if (arg1 === 'on') {
-        toggle = true
+        toggle = 'true'
         FileLib.write("LowercaseWarp", "toggle.txt", "true")
         ChatLib.chat('&aLowercaseWarp Enabled')
     } else if (arg1 === 'off') {
-        toggle = false
+        toggle = 'false'
         FileLib.write("LowercaseWarp", "toggle.txt", "false")
         ChatLib.chat('&cLowercaseWarp Disabled')
     } else {
