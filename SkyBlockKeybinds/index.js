@@ -31,7 +31,7 @@ register("step", () => {
 
 register("command", () => Settings.openGUI()).setName("sbkeybind");
 // Changelog
-const cl = new Changelog('SkyBlockKeybinds', '&e1.5.0', `&aAdded new request backend`);
+const cl = new Changelog('SkyBlockKeybinds', '&e1.5.2', `&aAdded new warps and Bingo`);
 cl.writeChangelog();
 // CS installer
 // This part is for the first install:

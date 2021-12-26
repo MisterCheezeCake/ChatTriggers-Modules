@@ -91,6 +91,10 @@ class Keybinds {
     this.key82 = new KeyBind("Guild Top", 0, "SBK - Guild");
     this.key83 = new KeyBind("Guild Party", 0, "SBK - Guild");
     this.key84 = new KeyBind("Events", 0, "SBK - General SkyBlock")
+    this.key85 = new KeyBind("Bingo", 0, "SBK - General SkyBlock")
+    this.key86 = new KeyBind("Museum", 0, "SBK - MVP+ Warps")
+    this.key87 = new KeyBind("Void  Sepulture", 0, "SBK - MVP+ Warps")
+    this.key88 = new KeyBind("Crystal Hollows", 0, "SBK - MVP+ Warps")
     }
 
 	tick() {
@@ -435,6 +439,23 @@ class Keybinds {
             ChatLib.command('events');
             addC('events')
         }
+        if (this.key85.isPressed()) {
+            ChatLib.command('bingo');
+            addC('bingo')
+        }
+        if (this.key86.isPressed()) {
+            ChatLib.command('warp museum');
+            addC('warp museum')
+        }
+        if (this.key87.isPressed()) {
+            ChatLib.command('warp void');
+            addC('warp void')
+        }
+        if (this.key88.isPressed()) {
+            ChatLib.command('warp crystals')
+            addC('warp crystals')
+        }
+        
 
     }}
 function addC(msg) {
