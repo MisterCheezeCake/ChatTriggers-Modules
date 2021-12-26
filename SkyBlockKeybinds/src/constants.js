@@ -7,6 +7,5 @@ const requestHelpClickCommand = new TextComponent("&0&l- &e/sbkrequest &aRequest
 const refreshHelpClickCommand = new TextComponent("&0&l- &e/sbk refreshremote &aRefresh the mod's remote data").setClick("run_command", "/sbk refreshremote").setHoverValue("&3Click to run &e/sbk refreshremote")
 const prefix = '&f[&6SkyBlock Keybinds&f] ';
 const notDev = '&f[&6SkyBlock Keybinds&f] &cThis is a developer command. You are not allowed to use this.';
-const userPerson = Player.getUUID();
 const blackListURL = 'https://raw.githubusercontent.com/MisterCheezeCake/RemoteData/main/Managment/SBKBlacklist.txt';
-export {webHookURL, blackListURL, userPerson, notDev, prefix, refreshHelpClickCommand, requestHelpClickCommand, installCSHelpClickCommands, sbCCHelpClickCommand, sbkeybindClickCommand, installMSG, noThankYou}
+export { blackListURL, notDev, prefix, refreshHelpClickCommand, requestHelpClickCommand, installCSHelpClickCommands, sbCCHelpClickCommand, sbkeybindClickCommand, installMSG, noThankYou}

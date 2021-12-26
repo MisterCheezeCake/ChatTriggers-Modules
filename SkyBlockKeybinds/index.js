@@ -6,7 +6,7 @@ import Settings from "./src/configfile";
 import request from "requestv2/index";
 import Keybinds from "./src/keybinds";
 import {Changelog} from "../ChangelogApi/index";
-import {blackListURL, userPerson, notDev, prefix, refreshHelpClickCommand, requestHelpClickCommand, installCSHelpClickCommands, sbCCHelpClickCommand, sbkeybindClickCommand, installMSG, noThankYou} from "./src/constants";
+import {blackListURL , notDev, prefix, refreshHelpClickCommand, requestHelpClickCommand, installCSHelpClickCommands, sbCCHelpClickCommand, sbkeybindClickCommand, installMSG, noThankYou} from "./src/constants";
 const File = Java.type("java.io.File")
 register("tick", () => Keybinds.tick())
 // Function Declarations
