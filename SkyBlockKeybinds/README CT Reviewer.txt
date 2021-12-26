@@ -1,0 +1,8 @@
+Hello Chattriggers review person, 
+
+I have included this file to help aliviate any possible concerns you have about me including an installer for the controls saved mod in my module.
+First, yes I have permision from the dev. https://i.imgur.com/oneV1mb.png 
+Second, if you are concerned about the authenticity of the JAR file included in the module, you can find the controls saved mod original download at    https://hypixel.net/threads/forge-1-8-9-controls-saved-%E2%80%93-save-controls-as-presets.2010689/
+If you are concerned, take the SHA 256 checksum of that JAR file and compare it to the one I have included. This tool will help you do that     https://emn178.github.io/online-tools/sha256_checksum.html 
+PS,
+If you have any more questions just ping me in the CT discord
