@@ -1,55 +1,93 @@
-import { Setting, SettingsObject } from 'SettingsManager/SettingsManager';
+/// <reference types="../CTAutocomplete" />
+/// <reference lib="es2015" />
+import settings from './settings';
 import { killsPerLevel } from './constants';
+import { Changelog} from "../ChangelogApi/index"
+new Changelog("CultivatingTracker", "&e2.0.0", "&aOverhauled settings menu and removed need to specify item id. &cYour settings will have been reset").writeChangelog()
+//import migrateSettings from './migrate';
 
-// settings
-const settings = new SettingsObject('CultivatingTracker', [
-	{
-		name: 'display settings',
-		settings: [
-			new Setting.Toggle('Enabled', true),
-			new Setting.Toggle('Text Shadow', true),
-			new Setting.TextInput('Prefix', '&7[&6Cultivating&7] &f'),
-			new Setting.TextInput('Item ID', '293'),
-			new Setting.TextInput('&cFor a list of ids to /ciid', ' '),
-			new Setting.StringSelector('Number Formatting', 0, [ 'None', 'Dot', 'Comma', 'Space' ]),
-			new Setting.Slider("x", 400, 0, Renderer.screen.getWidth()),
-			new Setting.Slider("y", 200, -50, Renderer.screen.getHeight())
-		],
-	},
-]).setCommand('cultivating').setSize(250, 200);
+const File = Java.type("java.io.File")
+let loc = {x:0,y:0}
+if (!new File(`${Config.modulesFolder}/CultivatingTracker/loc.json`).exists()) {
+	FileLib.write(`${Config.modulesFolder}/CultivatingTracker/loc.json`, JSON.stringify({x:0,y:0}))
+} else loc = JSON.parse(FileLib.read(`${Config.modulesFolder}/CultivatingTracker/loc.json`))
 
-Setting.register(settings);
-let idString, idINT
-register("step", () => {
-  idString = (settings.getSetting("display settings", "Item ID"))
-  idINT = parseInt(idString, 10)  
-}).setFps(1);
+const changeLoc = (x,y) => {
+	loc.x = x
+	loc.y = y
+	FileLib.write(`${Config.modulesFolder}/CultivatingTracker/loc.json`, JSON.stringify(loc))
+}
+register("command", arg1 =>  {
+	if (arg1 === "move") moveGui.open()
+	else settings.openGUI()
+}).setCommandName("cultivating")
+
+const moveGui = new Gui()
+
+moveGui.registerDraw(() => {
+	const text = 'Drag to move the Tracker and Press ESC to go back';
+	const scale = 1.8;
+	const color = Renderer.color(255, 55, 55);
+	new Text(text, Renderer.screen.getWidth() / 2 - Renderer.getStringWidth(text) * scale / 2, Renderer.screen.getHeight() / 2 - 50).setColor(color).setScale(scale).draw();
+});
+
+moveGui.registerKeyTyped((char, key) => {
+	if (key === 45 || 1) {
+		moveGui.close()
+		settings.openGUI()
+	}
+
+})
+
+
+register('dragged', (dx, dy) => {
+	if (!moveGui.isOpen()) return;
+
+	trackerDisplay.setRenderLoc(
+		trackerDisplay.getRenderX() + dx,
+		trackerDisplay.getRenderY() + dy,
+	);
+	changeLoc(
+	MathLib.map(
+		trackerDisplay.getRenderX(),
+		0, Renderer.screen.getWidth(),
+		0, 1
+	),
+	MathLib.map(
+		trackerDisplay.getRenderY(),
+		0, Renderer.screen.getHeight(),
+		0, 1
+	)
+	)
+
+});
 
 
 
 
-// draw display
-const expertiseDisplay = new Display();
 
-expertiseDisplay.addLine(1);
-expertiseDisplay.setRenderLoc(
-	settings.getSetting('display settings', 'x'),
-	settings.getSetting('display settings', 'y'),
+// draw display 
+const trackerDisplay = new Display();
+
+trackerDisplay.addLine(1);
+trackerDisplay.setRenderLoc(
+
+		Renderer.screen.getWidth() * loc.x,
+		Renderer.screen.getHeight() * loc.y
 );
 
 register('renderOverlay', () => {
-	if (!settings.getSetting('display settings', 'Enabled')) return expertiseDisplay.shouldRender = false;
+	if (!settings.toggle) return trackerDisplay.shouldRender = false;
+	if (moveGui.isOpen()) return trackerDisplay.shouldRender = true;
+	trackerDisplay.shouldRender = true;
 
-	expertiseDisplay.shouldRender = true;
-
-	expertiseDisplay
+	trackerDisplay
 		.setRenderLoc(
-			settings.getSetting('display settings', 'x'),
-			settings.getSetting('display settings', 'y'),
+			Renderer.screen.getWidth() * loc.x,
+			Renderer.screen.getHeight() * loc.y
 		)
 		.render();
 });
-
 // update display
 const maxLevel = Math.max(...Object.keys(killsPerLevel));
 
@@ -75,7 +113,7 @@ register('step', () => {
 	Player
 		.getInventory()
 		.getItems()
-		.filter(item => item.getID() === idINT) // minecraft:diamond_hoe
+		.filter(item => [290, 291, 292, 293, 271, 275, 258, 286, 279].includes(item.getID())) 
 		.reverse() // to get farmed from hoe that is closest to hotbar slot 1
 		.forEach(item => {
 			const nbtData = item.getItemNBT().getCompoundTag('tag').getCompoundTag('ExtraAttributes');
@@ -85,45 +123,24 @@ register('step', () => {
 
 	let separator;
 
-	switch (settings.getSetting('display settings', 'Number Formatting')) {
-		case 'Dot':
+	switch (settings.seperator) {
+		case 1:
 			separator = '.';
 			break;
 
-		case 'Comma':
+		case 2:
 			separator = ',';
 			break;
 
-		case 'Space':
+		case 3:
 			separator = ' ';
 			break;
 	}	
 	
-	expertiseDisplay.setLine(1, new DisplayLine(`${settings.getSetting('display settings', 'Prefix')}${isNaN(kills) ? '-/-' : kills < killsPerLevel[maxLevel] ? localeString(kills, separator) + '/' + localeString(getNextKillCount(kills), separator) : localeString(kills, separator)+ ' (Maxed)'}`).setShadow(settings.getSetting('display settings', 'Text Shadow')));
+	trackerDisplay.setLine(1, new DisplayLine(`${settings.prefix}${isNaN(kills) ? '-/-' : kills < killsPerLevel[maxLevel] ? localeString(kills, separator) + '/' + localeString(getNextKillCount(kills), separator) : localeString(kills, separator)+ ' (Maxed)'}`).setShadow(settings.shadow));
 }).setFps(5);
 // Help Command
 register("command", () => {
-   ChatLib.chat('&8----------------------------------------------------')
-   ChatLib.chat('&bDiamond Hoe&f: &e293')
-   ChatLib.chat('&bDiamond Axe&f: &e279')
-   ChatLib.chat('&6Golden Hoe&f: &e294')
-   ChatLib.chat('&6Golden Axe&f: &e286')
-   ChatLib.chat('&7Iron Hoe&f: &e292')
-   ChatLib.chat('&7Iron Axe&f: &e258')
-   ChatLib.chat('&8Stone Hoe&f: &e291')
-   ChatLib.chat('&8Stone Axe&f: &e275')
-   ChatLib.chat('&6Wooden Hoe&f: &e290')
-   ChatLib.chat('&6Wooden Axe&f: &e271')
-   ChatLib.chat('&8----------------------------------------------------')
+	ChatLib.chat("&7[&6Cultivating&7] &cThe module now works with all farming items automaticly")
 }).setName('ciid')
 
-// Changelog Writer
-var usedNewUpdate = FileLib.read("CultivatingTracker/update","1.0.1.txt")
-if (usedNewUpdate == "false")
-{
-    
-    ChatLib.chat('&8----------- &f[&5ChatTriggers&f] &8-----------')
-	ChatLib.chat('&5&lCultivatingTracker &r&ahas been updated to version &e1.0.1')
-	ChatLib.chat('&bChangelog&f: &aThe module now works with many more items, you can select them in the settings menu, and do /ciid for a list of item IDs to enter for the item you want.')
-	FileLib.write("CultivatingTracker/update", "1.0.1.txt", "true");
-}
