@@ -1,4 +1,4 @@
-import { @Vigilant, @TextProperty, @ColorProperty, @ButtonProperty, @SwitchProperty, Color } from 'Vigilance';
+import { @Vigilant, @SwitchProperty} from 'Vigilance';
 
 @Vigilant("AntiEscrow")
 class Settings {
@@ -18,6 +18,13 @@ class Settings {
         subcategory: "Settings"
     })
     binToggle = true
+    @SwitchProperty({
+        name: "Bazzar Escrow",
+        description: "Reopens Bazzar when it is closed by escrow",
+        category: "Module Settings",
+        subcategory: "Settings"
+    })
+    bzToggle = true
 
     constructor() {
         this.initialize(this);

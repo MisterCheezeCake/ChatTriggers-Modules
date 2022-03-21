@@ -1,6 +1,11 @@
 import Settings from "./configfile";
-import { Color } from "Vigilance";
-
+import Changelog from "../ChangelogLib";
+const changelog = new Changelog("AntiEscrow", "2.0.0", "Updated for CT 2.0 and added bazzar support");
+changelog.writeChangelog({
+  name: "&e",
+  version: "&e",
+  changelog: "&b"
+}) 
 register("command", () => Settings.openGUI()).setName("antiescrow");
 register("chat", (event) => {
   if (!Settings.ahToggle) return;
@@ -22,17 +27,9 @@ register("chat", (event) => {
   ChatLib.command('ah')
 }).setCriteria("&r&eVisit the Auction House to collect your item!&r");
 
-// Changelog Writer
-let usedNewUpdate = FileLib.read("AntiEscrow/update","1.2.0.txt")
-if (usedNewUpdate == "false")
-{
-    
-    ChatLib.chat('&8----------- &f[&5ChatTriggers&f] &8-----------')
-	ChatLib.chat('&5&lAntiEscrow &r&ahas been updated to version &e1.2.0')
-	ChatLib.chat('&bChangelog&f: &aVigilance is now the config system for AntiEscrow. Do /antiescrow to use the cool new menu.')
-	ChatLib.chat('&8------------------------------------')
-  FileLib.write("AntiEscrow/update", "1.2.0.txt", "true");
-}
-
+register("chat", (event) => {
+  if (!Settings.bzToggle) return;
+  ChatLib.command('bz')
+}).setCriteria("&r&eEscrow refunded ${*} &r&efor &r&bBazaar Instant Buy Submit&r&e!&r");
 
 
