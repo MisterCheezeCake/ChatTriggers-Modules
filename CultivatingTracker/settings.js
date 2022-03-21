@@ -3,7 +3,12 @@
 
 import { @Vigilant, @TextProperty, @ButtonProperty, @SwitchProperty, @SelectorProperty } from 'Vigilance';
 
-@Vigilant("CultivatingTracker")
+@Vigilant("CultivatingTracker", "Settings", {
+    getCategoryComparator: () => (a, b) => {
+        const categories = ['General', 'Appearance'];
+        return categories.indexOf(a.name) - categories.indexOf(b.name);
+    }
+}) 
 class Settings {
     @SwitchProperty({
         name: "Enabled",
@@ -18,7 +23,9 @@ class Settings {
         placeholder: "Move"
     })
     action() {
-        ChatLib.command("cultivating move", true)
+        Client.currentGui.close()
+    // The current vigilance messes with my moving gui, this fixes it
+        setTimeout(() => ChatLib.command("cultivating move", true), 100)
     }
     @SwitchProperty({
         name: "Text Shadow",

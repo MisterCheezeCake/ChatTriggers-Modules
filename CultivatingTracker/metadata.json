@@ -3,7 +3,7 @@
 	"author": "MisterCheezeCake",
 	"description": "Displays the crop count of the cultivating enchant on the hoe closest to slot one (for now only works with diamond will fix soon.",
 	"helpMessage": "/cultivating to open settings",
-	"version": "2.0.0",
-	"requires": ["Vigilance", "ChangelogAPI" ],
+	"version": "2.1.0",
+	"requires": ["Vigilance", "ChangelogLib" ],
 	"entry": "index.js"
 }
