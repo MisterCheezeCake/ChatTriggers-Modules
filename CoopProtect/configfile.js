@@ -12,7 +12,7 @@ class Settings {
 
     constructor() {
         this.initialize(this);
-        this.setCategoryDescription("Module Settings", "CoopProtect by MisterCheezeCake")
+        this.setCategoryDescription("Module Settings", "CoopProtect by MisterCheezeCake and IcarusPhantom")
     }
 }
 
