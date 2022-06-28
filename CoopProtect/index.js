@@ -33,7 +33,7 @@ register("command",  arg1 =>  {
 register("MessageSent", (message, event) => {
     if (!Settings.toggle) return;
     if (message.toLowerCase().includes('coopadd')) {
-        ChatLib.chat('&cCoopProtect protected you from this action');
+        ChatLib.chat('&cCoopProtect protected you from this action! do &e/coopprotect &cto disable this');
         cancel(event);
     }
 })
@@ -45,7 +45,7 @@ register("guiMouseClick", (x, y, button, gui, event) => {
     const items = Player.getContainer().getItems();
     if (gui.getSlotUnderMouse() !== null && gui.getSlotUnderMouse().field_75222_d === 25 && ChatLib.removeFormatting(items[25]?.getName() || '') == 'Co-op Request') { // field_75222_d: getting slot number
         cancel(event);
-        ChatLib.chat("&cCoopProtect Prevented you to clicking coop-add");
+        ChatLib.chat("&cCoopProtect Prevented you to clicking coop-add! do &e/coopprotect &cto disable this");
     }
 })
 
@@ -56,12 +56,12 @@ register('guiKey', (char, keyCode, gui, event) => {
     if (gui.getSlotUnderMouse() !== null && gui.getSlotUnderMouse().field_75222_d === 25 && ChatLib.removeFormatting(items[25]?.getName() || '') == 'Co-op Request') { // field_75222_d: getting slot number
         if (keyCode === Client.getMinecraft().field_71474_y.field_74316_C.func_151463_i()) { // Getting drop keybind
             cancel(event);
-            ChatLib.chat("&cCoopProtect Prevented you to clicking coop-add");
+            ChatLib.chat("&cCoopProtect Prevented you to clicking coop-add! do &e/coopprotect &cto disable this");
         } else {
             Client.getMinecraft().field_71474_y.field_151456_ac.forEach((keybind) => { // Getting hotkey keybind
                 if (keybind.func_151463_i() === keyCode) {
                     cancel(event);
-                    ChatLib.chat("&cCoopProtect Prevented you to clicking coop-add");
+                    ChatLib.chat("&cCoopProtect Prevented you to clicking coop-add! do &e/coopprotect &cto disable this");
                 }
             })
         }
