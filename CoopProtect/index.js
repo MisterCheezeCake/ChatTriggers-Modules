@@ -4,7 +4,7 @@ import Settings from "./configfile";
 
 import Changelog from "../ChangelogLib";
 
-const cl = new Changelog("CoopProtect", "1.3.0", "Updated module to not allowing clicking coop-add in profile viewer")
+const cl = new Changelog("CoopProtect", "1.3.0", "Updated module to not allowing clicking coop-add in profile viewer from IcarusPhantom")
 cl.writeChangelog({
     changelog: "&b",
     name: "&e",
