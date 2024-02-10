@@ -1,0 +1,10 @@
+{
+    "name": "Toasty",
+    "creator": "CheezeCake",
+    "description": "Wrapper for working with Minecraft Toasts in 1.20",
+    "entry": "index.js",
+    "requires": [],
+    "helpMessage": "",
+    "isRequired": true,
+    "version": "0.1.0"
+}

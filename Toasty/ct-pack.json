@@ -1,0 +1,7 @@
+{
+    "purge": [
+        "config.toml",
+        ".git",
+        ".gitignore"
+    ]
+}
