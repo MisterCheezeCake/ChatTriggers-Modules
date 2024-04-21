@@ -1,0 +1,11 @@
+{
+    "compilerOptions": {
+        "target": "es2015",
+        "experimentalDecorators": true,
+        "allowJs": true
+    },
+    "include": [
+        "index.ts",
+        "src/**/*.ts", 
+        "src/config.js"    ]
+}

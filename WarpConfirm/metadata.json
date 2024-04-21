@@ -1,0 +1,10 @@
+{
+    "name": "WarpConfirm",
+    "creator": "CheezeCake",
+    "description": "No description provided",
+    "entry": "index.js",
+    "requires": ["Vigilance", "ChangelogLib"],
+    "helpMessage": "",
+    "version": "1.0.0",
+    "isRequired": false
+}
