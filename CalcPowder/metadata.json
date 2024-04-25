@@ -1,0 +1,10 @@
+{
+    "name": "CalcPowder",
+    "creator": "CheezeCake",
+    "description": "No description provided",
+    "entry": "index.js",
+    "requires": ["ChangelogLib", "Vigilance"],
+    "helpMessage": "&f[&5CalcPowder&f] &7Usage: &e/calcPowder <perk_name> <starting level> <ending lebel> &7- Calculates the amount of powder needed to reach the specified level.",
+    "isRequired": false,
+    "version": "0.1.0"
+}
