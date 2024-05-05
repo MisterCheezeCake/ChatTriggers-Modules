@@ -1,0 +1,10 @@
+{
+    "name": "WikiSearch",
+    "creator": "MisterCheezeCake",
+    "description": "Search the SkyBlock Wiki with a command",
+    "entry": "index.js",
+    "version": "1.0.0",
+    "requires": ["ChangelogLib"],
+    "helpMessage": "",
+    "isRequired": false
+}
